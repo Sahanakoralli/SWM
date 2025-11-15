@@ -1,5 +1,6 @@
 import BinData from "../models/BinData.js";
 import CurrentDustbinLevel from "../models/CurrentDustbinLevel.js";
+import { io } from "../server.js";
 
 export const getDustbinHistory = async (req, res) => {
   try {
@@ -38,6 +39,12 @@ export const updateDustbinData = async (req, res) => {
       existing.timestamp = Date.now();
       await existing.save();
       console.log(`♻️ Updated ${binId}`);
+
+      io.emit("bin_alert", {
+        binId,
+        fillLevel,
+        message: "Dustbin is above 80%. Please collect",
+      });
     }
 
     res.status(200).json({ message: "Dustbin data updated" });
@@ -49,9 +56,25 @@ export const updateDustbinData = async (req, res) => {
 
 export const getCurrentDustbins = async (req, res) => {
   try {
-    const bins = await CurrentDustbinLevel.find();
+    const bins = await CurrentDustbinLevel.find().populate("location");
     res.json(bins);
   } catch (err) {
     res.status(500).json({ message: "Error fetching bins" });
+  }
+};
+
+export const collected = async (req, res) => {
+  try {
+    const { binId } = req.body;
+
+    await CurrentDustbinLevel.findOneAndUpdate({ binId }, { fillLevel: 0 });
+    io.emit("bin_alert", {
+      binId,
+      message: "Garbage Collected Successfully",
+    });
+    res.status(200).json("Collector update send");
+  } catch (error) {
+    console.log("Error in collected ", error);
+    res.status(500).json({ message: "error in collected", error: error });
   }
 };

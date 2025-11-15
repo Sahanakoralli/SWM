@@ -47,6 +47,7 @@ export const optimizeRoute = async (req, res) => {
         duration: leg.duration.text,
       })),
       polyline: data.routes[0].overview_polyline.points,
+      locations: locations,
     });
   } catch (err) {
     console.error("Route error:", err.message);

@@ -5,6 +5,11 @@ const currentDustbinSchema = new mongoose.Schema({
   fillLevel: { type: Number, required: true },
   gasLevel: { type: Number, required: true },
   timestamp: { type: Date, default: Date.now },
+  location: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "DustbinLocation", // Reference back to dustbinLocation
+  },
 });
 
-export default mongoose.model("currentDustbinLevel", currentDustbinSchema);
+const CurrentDustbin = mongoose.model("CurrentDustbin", currentDustbinSchema);
+export default CurrentDustbin;

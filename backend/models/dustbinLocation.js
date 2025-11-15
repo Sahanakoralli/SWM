@@ -5,6 +5,14 @@ const dustbinLocationSchema = new mongoose.Schema({
   latitude: { type: Number, required: true },
   longitude: { type: Number, required: true },
   address: String,
+  currentDustbin: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "CurrentDustbin", // Reference to the currentDustbin model
+  },
 });
 
-export default mongoose.model("dustbinLocation", dustbinLocationSchema);
+const DustbinLocation = mongoose.model(
+  "DustbinLocation",
+  dustbinLocationSchema
+);
+export default DustbinLocation;
