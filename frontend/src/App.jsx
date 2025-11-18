@@ -35,6 +35,7 @@ const App = () => {
                   <Route path="dustbin-location" element={<MapProvider />} />
                   <Route path="dustbin" element={<DustbinList />} />
                   <Route path="user" element={<UserList />} />
+                  <Route path="history/:id" element={<DustbinHistory />} />
                 </Routes>
               </ProtectedAdminRoute>
             }

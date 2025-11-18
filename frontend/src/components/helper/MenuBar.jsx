@@ -1,4 +1,12 @@
-import { Badge, Box, Button, IconButton, Menu, Portal } from "@chakra-ui/react";
+import {
+  Badge,
+  Box,
+  Button,
+  IconButton,
+  Menu,
+  Portal,
+  Text,
+} from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import { MdNotifications } from "react-icons/md";
 import { io } from "socket.io-client";
@@ -43,7 +51,21 @@ const MenuBar = () => {
             {notification?.map((data, index) => (
               <>
                 <Menu.ItemGroup>
-                  <Menu.ItemGroupLabel value={data.binId}>
+                  <Box
+                  // display={"flex"}
+                  // flexDirection={"row"}
+                  // justifyContent={"center"}
+                  >
+                    <Text>BinId: {data.binId}</Text>
+                    {data.fillLevel ? (
+                      <Text>Fill Level: {data.fillLevel}%</Text>
+                    ) : (
+                      ""
+                    )}
+
+                    <Text>Message: {data.message}</Text>
+                  </Box>
+                  {/* <Menu.ItemGroupLabel value={data.binId}>
                     {data.binId}
                   </Menu.ItemGroupLabel>
                   {data.fillLevel ? (
@@ -53,7 +75,7 @@ const MenuBar = () => {
                   ) : (
                     ""
                   )}
-                  <Menu.Item value={"message"}>{data.message}</Menu.Item>
+                  <Menu.Item value={"message"}>{data.message}</Menu.Item> */}
                 </Menu.ItemGroup>
                 <Menu.Separator />
               </>

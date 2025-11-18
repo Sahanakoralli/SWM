@@ -68,6 +68,7 @@ app.use("/api/dustbin", dustbinRoutes);
 app.use("/api/route", routeRoutes);
 
 const det = async () => {
+  // await BinData.deleteMany({ binId: "BIN_001" });
   // await BinData.deleteMany({});
   // await CurrentDustbin.deleteMany({});
   // await DustbinLocation.deleteMany({});
@@ -76,12 +77,15 @@ const det = async () => {
   // await mongoose.connection.db.dropCollection("dustbinlocations");
 };
 
-det();
+// det();
 function getLocalIp() {
   const nets = os.networkInterfaces();
+  // console.log("nets ", nets);
   for (const name of Object.keys(nets)) {
+    // console.log("name ", name);
     for (const net of nets[name]) {
-      if (net.family === "IPv4" && !net.internal) {
+      // console.log("name ", net);
+      if (name === "Wi-Fi" && net.family === "IPv4" && !net.internal) {
         return net.address;
       }
     }

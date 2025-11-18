@@ -12,6 +12,7 @@ import {
 import axios from "axios";
 import CustomDialog from "../helper/CustomDialog";
 import DeleteDustbinDialog from "../helper/DeleteDustbinDialog";
+import { Link } from "react-router-dom";
 const items = [
   {
     id: 1,
@@ -44,7 +45,7 @@ const items = [
 ];
 const DustbinTable = () => {
   const [data, setData] = useState([]);
-
+  const [binLocation, setBinLocation] = useState({});
   const fetchData = async () => {
     try {
       const response = await axios.get(`/api/dustbin/current`);
@@ -60,7 +61,14 @@ const DustbinTable = () => {
     fetchData();
   }, []);
 
+  // const handelLocation = ({latitude,longitude}) =>{
+  //     setBinLocation({
+  //       latitude:latitude
+  //       latitude:latitude
+  //     });
+  // }
   console.log("Data :", data);
+
   return (
     <>
       <HStack m="1rem">
@@ -120,27 +128,28 @@ const DustbinTable = () => {
                       iconSize="md"
                       onSave={fetchData}
                     />
-                    <IconButton
+                    {/* <IconButton
                       colorPalette={"cyan"}
                       aria-label="Search database"
                       variant="outline"
                       size={"md"}
                     >
                       <MdLocationPin />
-                    </IconButton>
+                    </IconButton> */}
                     <DeleteDustbinDialog
                       binId={item.binId}
                       onSave={fetchData}
                     />
-
-                    <IconButton
-                      aria-label="Search database"
-                      variant="outline"
-                      size={"md"}
-                      colorPalette={"red"}
-                    >
-                      <MdHistory />
-                    </IconButton>
+                    {/* <Link to={`/admin/history/${item.binId}`}>
+                      <IconButton
+                        aria-label="Search database"
+                        variant="outline"
+                        size={"md"}
+                        colorPalette={"red"}
+                      >
+                        <MdHistory />
+                      </IconButton>
+                    </Link> */}
                   </HStack>
                 </Table.Cell>
               </Table.Row>

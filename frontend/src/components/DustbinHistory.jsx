@@ -24,12 +24,12 @@ export default function DustbinHistory() {
         borderColor: "green",
         fill: false,
       },
-      {
-        label: "Gas Level",
-        data: history.map((h) => h.gasLevel),
-        borderColor: "red",
-        fill: false,
-      },
+      // {
+      //   label: "Gas Level",
+      //   data: history.map((h) => h.gasLevel),
+      //   borderColor: "red",
+      //   fill: false,
+      // },
     ],
   };
 

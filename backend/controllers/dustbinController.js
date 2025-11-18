@@ -22,6 +22,7 @@ export const updateDustbinData = async (req, res) => {
     }
 
     // Save full record in binData (history)
+    console.log("fill level = ", fillLevel, " updated for ", binId);
     await BinData.create({ binId, fillLevel, gasLevel });
 
     // Update or insert currentDustbinLevel
@@ -40,11 +41,14 @@ export const updateDustbinData = async (req, res) => {
       await existing.save();
       console.log(`♻️ Updated ${binId}`);
 
-      io.emit("bin_alert", {
-        binId,
-        fillLevel,
-        message: "Dustbin is above 80%. Please collect",
-      });
+      if (fillLevel >= 80) {
+        console.log("alert send of binId ", binId);
+        io.emit("bin_alert", {
+          binId,
+          fillLevel,
+          message: "Dustbin is above 80%. Please collect",
+        });
+      }
     }
 
     res.status(200).json({ message: "Dustbin data updated" });
@@ -66,7 +70,7 @@ export const getCurrentDustbins = async (req, res) => {
 export const collected = async (req, res) => {
   try {
     const { binId } = req.body;
-
+    console.log("Collected binId = ", binId);
     await CurrentDustbinLevel.findOneAndUpdate({ binId }, { fillLevel: 0 });
     io.emit("bin_alert", {
       binId,
