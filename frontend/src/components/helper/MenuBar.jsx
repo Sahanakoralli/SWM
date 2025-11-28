@@ -51,11 +51,7 @@ const MenuBar = () => {
             {notification?.map((data, index) => (
               <>
                 <Menu.ItemGroup>
-                  <Box
-                  // display={"flex"}
-                  // flexDirection={"row"}
-                  // justifyContent={"center"}
-                  >
+                  <Box>
                     <Text>BinId: {data.binId}</Text>
                     {data.fillLevel ? (
                       <Text>Fill Level: {data.fillLevel}%</Text>
@@ -65,17 +61,6 @@ const MenuBar = () => {
 
                     <Text>Message: {data.message}</Text>
                   </Box>
-                  {/* <Menu.ItemGroupLabel value={data.binId}>
-                    {data.binId}
-                  </Menu.ItemGroupLabel>
-                  {data.fillLevel ? (
-                    <Menu.Item value={data.fillLevel}>
-                      {data.fillLevel}
-                    </Menu.Item>
-                  ) : (
-                    ""
-                  )}
-                  <Menu.Item value={"message"}>{data.message}</Menu.Item> */}
                 </Menu.ItemGroup>
                 <Menu.Separator />
               </>

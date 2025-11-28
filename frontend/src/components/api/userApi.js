@@ -2,7 +2,7 @@ import axios from "axios";
 const API_URL = "/api/";
 
 export const updateUser = (id, data) =>
-  axios.post(`${API_URL}updateUser/${id}`, data);
+  axios.post(`${API_URL}admin/updateUser/${id}`, data);
 
 export const addUser = (data) => axios.post(`${API_URL}admin/addUser`, data);
 

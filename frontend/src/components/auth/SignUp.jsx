@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { PasswordInput } from "../ui/password-input";
 import { Button, Input, VStack } from "@chakra-ui/react";
 import axios from "axios";
+import { toaster } from "../ui/toaster";
 
 const backend = `http://localhost:5000`;
 
@@ -35,13 +36,24 @@ const SignUp = () => {
       });
 
       // localStorage("userInfo", JSON.stringify(data));
-      alert("Success");
-
-      setEmail("");
-      setName("");
-      setPassword("");
-      setRePassword("");
-
+      if (data.status === 201) {
+        // alert("Success");
+        toaster.create({
+          description: "User Created sucessfuly",
+          type: "success",
+          duration: 5000,
+        });
+        setEmail("");
+        setName("");
+        setPassword("");
+        setRePassword("");
+      } else if (data.status === 400) {
+        toaster.create({
+          description: "User exist",
+          type: "error",
+          duration: 5000,
+        });
+      }
       setLoading(false);
     } catch (error) {
       setLoading(false);

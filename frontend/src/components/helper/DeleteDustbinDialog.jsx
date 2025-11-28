@@ -10,6 +10,7 @@ import {
 import { useState } from "react";
 import { MdDelete } from "react-icons/md";
 import { deleteDustbin } from "../api/dustbinApi";
+import { toaster } from "../ui/toaster";
 
 const DeleteDustbinDialog = ({ binId, onSave }) => {
   const [open, setOpen] = useState(false);
@@ -18,8 +19,16 @@ const DeleteDustbinDialog = ({ binId, onSave }) => {
     if (!binId) return;
     try {
       await deleteDustbin(binId);
+      toaster.create({
+        description: "Dustbin deleted succesfully",
+        type: "success",
+      });
       onSave?.();
     } catch (error) {
+      toaster.create({
+        description: "error deleting dustbin",
+        type: "error",
+      });
       console.log("error while deleting ", error);
     }
   };

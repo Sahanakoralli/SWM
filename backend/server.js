@@ -64,7 +64,7 @@ start(); // database connection
 //routes
 app.use("/api/auth", authRoutes);
 app.use("/api/admin", adminRoutes);
-app.use("/api/dustbin", dustbinRoutes);
+app.use("/api/dustbin", dustbinRoutes); //http://192.1.1.1:5000/api/dustbin
 app.use("/api/route", routeRoutes);
 
 const det = async () => {

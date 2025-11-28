@@ -1,4 +1,5 @@
 import { Button, Input, VStack } from "@chakra-ui/react";
+import { toaster } from "../ui/toaster";
 import axios from "axios";
 import React, { useState } from "react";
 import { PasswordInput } from "../ui/password-input";
@@ -28,22 +29,41 @@ const Login = () => {
         password: password,
       });
 
-      setEmail("");
-      setPassword("");
-      localStorage.setItem("userInfo", JSON.stringify(data.data));
-      alert("login success ");
-      console.log(data.data);
-      console.log(data.data.role);
-      if (data.data.role === "admin") {
-        nav("/admin/");
-      } else if (data.data.role === "user") {
-        nav("/user");
-      } else if (data.data.role === "collector") {
-        nav("/collector");
+      console.log(data);
+      if (data.status === 200) {
+        setEmail("");
+        setPassword("");
+        localStorage.setItem("userInfo", JSON.stringify(data.data));
+        toaster.create({
+          description: "login Success",
+          type: "success",
+        });
+        // alert("login success ");
+        // console.log(data.data);
+        // console.log(data.data.role);
+        if (data.data.role === "admin") {
+          nav("/admin/");
+        } else if (data.data.role === "user") {
+          nav("/user");
+        } else if (data.data.role === "collector") {
+          nav("/collector");
+        }
+      } else if (data.status === 401) {
+        toaster.create({
+          description: "Invalid email and password",
+          duration: 6000,
+          type: "error",
+        });
       }
       setLoading(false);
     } catch (error) {
       setLoading(false);
+      // console.log(error);
+      toaster.create({
+        description: error.message,
+        type: "error",
+        duration: 6000,
+      });
       alert(error.message);
     }
   };

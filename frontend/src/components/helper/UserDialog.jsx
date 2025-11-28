@@ -14,6 +14,7 @@ import {
 import { addUser, updateUser } from "../api/userApi";
 import { PasswordInput } from "../ui/password-input";
 import { MdAdd, MdEdit } from "react-icons/md";
+import { toaster } from "../ui/toaster";
 
 const UserDialog = ({
   ma = "1rem",
@@ -55,18 +56,27 @@ const UserDialog = ({
       if (isEdit) {
         await updateUser(user._id, form);
         console.log("user updated succuessfully");
+        toaster.create({
+          description: "User updated successfully",
+          type: "success",
+          duration: 6000,
+        });
       } else {
         await addUser(form);
         console.log("added user succuessfully");
-
-        setForm({
-          name: "",
-          email: "",
-          role: "",
-          password: "",
-          repassword: "",
+        toaster.create({
+          description: "User created successfully",
+          type: "success",
+          duration: 6000,
         });
       }
+      setForm({
+        name: "",
+        email: "",
+        role: "",
+        password: "",
+        repassword: "",
+      });
       dialog.setOpen(false);
       onSave?.();
     } catch (error) {
